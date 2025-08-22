@@ -1,12 +1,14 @@
 export const conferenceData = {
-  title: "School of Science and Technology Conference 2024",
+  title: "School of Science and Technology Conference 2025",
   subtitle: "Gateway ICT Polytechnic Saapade, Ogun State",
   description: "Join us for an innovative conference showcasing the latest in science and technology education, research, and industry partnerships.",
-  date: "2024-11-15",
-  time: "09:00",
+  date: "TBD",
+  time: "TBD",
   venue: "Gateway ICT Polytechnic Saapade",
   location: "Saapade, Ogun State, Nigeria",
-  theme: "Innovation in Science and Technology Education",
+  theme: "Topic to be announced soon",
+  isUnderConstruction: true,
+  constructionMessage: "Website under construction - Details will be updated soon!",
   
   speakers: [
     {

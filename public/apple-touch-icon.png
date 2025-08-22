@@ -1,0 +1,30 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradientApple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9333ea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded rectangle background -->
+  <rect x="10" y="10" width="160" height="160" rx="35" ry="35" fill="url(#gradientApple)"/>
+  
+  <!-- Gateway symbol (stylized G) -->
+  <path d="M55 45 C45 45 45 55 45 65 L45 115 C45 125 45 135 55 135 L90 135 L90 115 L70 115 L70 90 L90 90 L90 70 L55 70 Z" fill="white" stroke="white" stroke-width="2"/>
+  
+  <!-- ICT circuit pattern -->
+  <circle cx="110" cy="70" r="8" fill="white"/>
+  <circle cx="135" cy="90" r="8" fill="white"/>
+  <circle cx="110" cy="110" r="8" fill="white"/>
+  
+  <!-- Connecting lines -->
+  <line x1="110" y1="70" x2="135" y2="90" stroke="white" stroke-width="4" opacity="0.8"/>
+  <line x1="135" y1="90" x2="110" y2="110" stroke="white" stroke-width="4" opacity="0.8"/>
+  <line x1="90" y1="90" x2="110" y2="90" stroke="white" stroke-width="4" opacity="0.8"/>
+  
+  <!-- Additional tech elements -->
+  <circle cx="125" cy="60" r="3" fill="white" opacity="0.7"/>
+  <circle cx="125" cy="120" r="3" fill="white" opacity="0.7"/>
+  <circle cx="145" cy="75" r="3" fill="white" opacity="0.7"/>
+  <circle cx="145" cy="105" r="3" fill="white" opacity="0.7"/>
+</svg>

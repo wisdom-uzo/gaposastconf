@@ -82,7 +82,7 @@ export default function About() {
           </motion.div>
           
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-emerald-800 bg-clip-text text-transparent mb-6">
-            About ICONFST'25
+            About ICONFST&apos;25
           </h2>
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
             The International Conference on Science and Technology brings together leading researchers, 
@@ -119,7 +119,7 @@ export default function About() {
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-800 to-emerald-800 bg-clip-text text-transparent">Conference Vision</h3>
               </div>
               <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                ICONFST'25 aims to foster collaboration between artificial intelligence researchers and 
+                ICONFST&apos;25 aims to foster collaboration between artificial intelligence researchers and 
                 circular economy experts to address one of the most pressing challenges of our time: 
                 global waste management and environmental sustainability.
               </p>

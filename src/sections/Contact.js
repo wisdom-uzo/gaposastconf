@@ -83,7 +83,7 @@ export default function Contact() {
             Contact Us
           </h2>
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-            Have questions about ICONFST'25? We're here to help. Reach out to our organizing committee 
+            Have questions about ICONFST&apos;25? We&apos;re here to help. Reach out to our organizing committee 
             for any inquiries about submissions, registration, or conference details.
           </p>
         </motion.div>

@@ -129,7 +129,7 @@ export default function Registration() {
             Conference Registration
           </h2>
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-            Join leading researchers, academics, and industry professionals at ICONFST'25. 
+            Join leading researchers, academics, and industry professionals at ICONFST&apos;25. 
             Choose the registration tier that best fits your needs.
           </p>
         </motion.div>
@@ -249,7 +249,7 @@ export default function Registration() {
           className="mb-16"
         >
           <h3 className="text-3xl font-bold text-slate-900 text-center mb-12">
-            What's Included
+            What&apos;s Included
           </h3>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

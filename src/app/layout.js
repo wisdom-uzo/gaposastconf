@@ -19,24 +19,28 @@ export const viewport = {
 
 export const metadata = {
   metadataBase: new URL('https://www.gaposastconf.org'),
-  title: "Gateway ICT Conference 2025 | School of Science and Technology",
-  description: "Join us for the Gateway ICT Conference 2025 at Gateway ICT Polytechnic Saapade, Ogun State. Discover the latest in technology, innovation, and digital transformation. Conference details coming soon!",
-  keywords: "Gateway ICT, Conference 2025, Technology, Innovation, Polytechnic, Saapade, Ogun State, Digital Transformation, ICT Education",
-  authors: [{ name: "Gateway ICT Polytechnic" }],
-  creator: "Gateway ICT Polytechnic",
-  publisher: "Gateway ICT Polytechnic",
-  robots: "index, follow",
+  title: "ICONFST'25 - International Conference on Science and Technology",
+  description: "Join ICONFST'25 exploring Artificial Intelligence Revolution and Circular Economy: The Synergy to Curb Global Waste Crises. Leading international conference on science and technology.",
+  keywords: ["ICONFST", "science", "technology", "AI", "artificial intelligence", "circular economy", "waste management", "sustainability", "conference", "2025", "research", "innovation"],
+  authors: [{ name: "ICONFST'25 Conference" }],
+  creator: "ICONFST'25 Conference",
+  publisher: "ICONFST'25 Conference",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: "Gateway ICT Conference 2025 | School of Science and Technology",
-    description: "Join us for the Gateway ICT Conference 2025 at Gateway ICT Polytechnic Saapade, Ogun State. Conference details coming soon!",
+    title: "ICONFST'25 - International Conference on Science and Technology",
+    description: "Join ICONFST'25 exploring Artificial Intelligence Revolution and Circular Economy: The Synergy to Curb Global Waste Crises.",
     url: "https://www.gaposastconf.org",
-    siteName: "Gateway ICT Conference",
+    siteName: "ICONFST'25",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Gateway ICT Conference 2025",
+        alt: "ICONFST'25 - International Conference on Science and Technology",
       },
     ],
     locale: "en_US",
@@ -44,16 +48,31 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gateway ICT Conference 2025 | School of Science and Technology",
-    description: "Join us for the Gateway ICT Conference 2025 at Gateway ICT Polytechnic Saapade, Ogun State. Conference details coming soon!",
-    images: ["/images/twitter-image.jpg"],
-    creator: "@GatewayICT",
+    title: "ICONFST'25 - International Conference on Science and Technology",
+    description: "Join ICONFST'25 exploring Artificial Intelligence Revolution and Circular Economy: The Synergy to Curb Global Waste Crises.",
+    images: ["/twitter-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   manifest: "/manifest.json",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 

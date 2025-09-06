@@ -1,77 +1,105 @@
 export const conferenceData = {
-  title: "School of Science and Technology Conference 2025",
-  subtitle: "Gateway ICT Polytechnic Saapade, Ogun State",
-  description: "Join us for an innovative conference showcasing the latest in science and technology education, research, and industry partnerships.",
+  title: "INTERNATIONAL CONFERENCE ON SCIENCE AND TECHNOLOGY",
+  subtitle: "ICONFST'25",
+  description: "Join leading researchers, industry professionals, and academics in exploring the intersection of AI and circular economy solutions to address global waste challenges.",
   date: "TBD",
   time: "TBD",
   venue: "Gateway ICT Polytechnic Saapade",
   location: "Saapade, Ogun State, Nigeria",
-  theme: "Topic to be announced soon",
-  isUnderConstruction: true,
-  constructionMessage: "Website under construction - Details will be updated soon!",
+  theme: "ARTIFICIAL INTELLIGENCE REVOLUTION AND CIRCULAR ECONOMY: THE SYNERGY TO CURB GLOBAL WASTE CRISES",
+  isUnderConstruction: false,
+  constructionMessage: "",
   
-  speakers: [
-    {
-      id: 1,
-      name: "Dr. Adebayo Johnson",
-      title: "Dean of Science and Technology",
-      institution: "Gateway ICT Polytechnic",
-      topic: "The Future of Technical Education in Nigeria",
-      image: "/images/speakers/speaker1.jpg",
-      bio: "Dr. Johnson is a renowned educator with over 20 years of experience in technical education."
-    },
-    {
-      id: 2,
-      name: "Prof. Sarah Ogundimu",
-      title: "Director of Research",
-      institution: "Federal University of Technology, Akure",
-      topic: "Emerging Technologies in African Context",
-      image: "/images/speakers/speaker2.jpg",
-      bio: "Prof. Ogundimu specializes in emerging technologies and their applications in developing countries."
-    }
+  subthemes: [
+    "AI-Powered Waste Management Systems",
+    "Green Engineering & Sustainable Design",
+    "Robotics & Automation in Circular Economy",
+    "Big Data, IoT, and Smart Cities",
+    "Blockchain & Digital Twins for Circular Supply Chains",
+    "Biotechnology and Waste Valorisation",
+    "Nanotechnology for Pollution Control & Resource Recovery",
+    "Renewable Energy and Circular Economy Synergies",
+    "Climate Science and AI",
+    "Cybersecurity & Data Ethics in AI for Circular Systems",
+    "Green Chemistry and AI-Driven Innovations for Sustainable Material Cycles",
+    "Pharmaceutical Waste Management",
+    "Mathematical Modelling of Waste Management Systems",
+    "Statistical Analysis of Waste Generation Patterns",
+    "Optimization Techniques for Waste Reduction and Management",
+    "Predictive Analytics for Waste Management",
+    "Mathematical Modelling of Circular Economy Systems",
+    "AI in Sustainable Business Models",
+    "Accounting for Sustainability and Waste Reduction",
+    "Corporate Governance and Circular Economy",
+    "Supply Chain Management & Reverse Logistics",
+    "Entrepreneurship & Innovation in Circular Startups",
+    "Sustainability Performance Measurement and Reporting",
+    "Cost-Benefit Analysis of AI Adoption in Waste Management",
+    "Human Resource Management in the AI-Circular Economy Era",
+    "Marketing of Sustainable Products and Consumer Behaviour",
+    "International Trade, Policy, and Regulation",
+    "AI, Circular Economy, and Social Inclusion",
+    "Education, Research, and Knowledge Sharing in Circular Systems",
+    "Behavioural Economics of Waste Reduction",
+    "Public Policy and Governance for Circular Economy",
+    "Legal and Ethical Implications of AI in Waste Management",
+    "Sociology of Technology and Waste",
+    "Cultural Perspectives on Waste and Resource Use",
+    "Geopolitics of AI and Waste Crises",
+    "Digital Finance and Green Investment",
+    "Circular Economy and the Future of Work",
+    "Microbial Biotechnology in Waste Valorisation",
+    "AI-Assisted Metagenomics",
+    "Bioremediation of Polluted Environments",
+    "Synthetic Biology and Circular Economy",
+    "Microbial Ecology and Waste Ecosystems",
+    "Enzyme Engineering for Waste Breakdown",
+    "Biochemical Pathways in Resource Recovery",
+    "Biochemistry of Renewable Materials",
+    "Waste-to-Energy Biochemical Processes",
+    "AI in Drug and Chemical Waste Management",
+    "Ecosystem Restoration in Circular Economy",
+    "Waste and Climate Change Nexus",
+    "AI in Environmental Risk Assessment",
+    "Biosensors for Pollution Monitoring",
+    "Nature-Based Solutions for Waste Mitigation",
+    "Green Chemistry for Circular Economy",
+    "Catalysis and Waste Conversion",
+    "Polymer Chemistry and Biodegradable Alternatives",
+    "Waste-to-Resource Chemical Processes",
+    "Chemical recycling of textiles, metals, and industrial by-products",
+    "AI in Analytical Chemistry for Waste Tracking",
+    "Sustainable Architecture and Circular Design",
+    "Smart Cities and Waste-Free Urban Planning",
+    "Construction Waste Management",
+    "Green Building Materials: Biodegradable and recyclable construction materials",
+    "AI in Facilities Management for Sustainability",
+    "Urban Heat Islands and Waste Nexus",
+    "Lifecycle Assessment of Buildings",
+    "Circular Economy in Real Estate and Infrastructure"
   ],
   
-  schedule: [
-    {
-      time: "09:00",
-      title: "Registration & Welcome Coffee",
-      speaker: "",
-      duration: "30 mins"
-    },
-    {
-      time: "09:30",
-      title: "Opening Ceremony",
-      speaker: "Rector, Gateway ICT Polytechnic",
-      duration: "30 mins"
-    },
-    {
-      time: "10:00",
-      title: "Keynote: The Future of Technical Education",
-      speaker: "Dr. Adebayo Johnson",
-      duration: "45 mins"
-    },
-    {
-      time: "11:00",
-      title: "Coffee Break",
-      speaker: "",
-      duration: "15 mins"
-    },
-    {
-      time: "11:15",
-      title: "Panel: Emerging Technologies in African Context",
-      speaker: "Prof. Sarah Ogundimu",
-      duration: "60 mins"
-    }
-  ],
+  speakers: [],
+  
+  schedule: [],
   
   registration: {
-    deadline: "2024-11-10",
-    fee: "Free",
-    requirements: ["Valid ID", "Registration confirmation"]
+    earlyBird: {
+      price: "TBD",
+      deadline: "TBD"
+    },
+    regular: {
+      price: "TBD",
+      deadline: "TBD"
+    },
+    student: {
+      price: "TBD",
+      deadline: "TBD"
+    }
   },
   
   contact: {
-    email: "conference@gatewayict.edu.ng",
+    email: "iconfst@gatewayict.edu.ng",
     phone: "+234-xxx-xxx-xxxx",
     address: "Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria"
   }

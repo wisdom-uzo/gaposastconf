@@ -25,46 +25,65 @@ export default function Registration() {
   const registrationTiers = [
     {
       name: "Student",
-      price: "TBD",
-      description: "For undergraduate and graduate students",
+      price: "₦5,000",
+      description: "Perfect for students and early-career researchers",
       features: [
         "Access to all sessions",
         "Conference materials",
         "Networking events",
         "Student poster session",
-        "Certificate of participation"
+        "Digital certificate"
       ],
       icon: Users,
       color: "blue"
     },
     {
-      name: "Academic",
-      price: "TBD",
-      description: "For faculty and researchers",
+      name: "Local Scholars",
+      price: "₦20,000 - ₦30,000",
+      description: "For local faculty, researchers, and academic professionals",
       features: [
-        "All student benefits",
-        "Priority seating",
-        "Access to speaker meet & greet",
-        "Research collaboration opportunities",
-        "Publication opportunities"
+        "Early Bird: ₦20,000 (Sept 8-26)",
+        "Mid Registration: ₦25,000 (Sept 27 - Oct 10)",
+        "Late Registration: ₦30,000 (Oct 11-21)",
+        "Access to all sessions",
+        "Conference proceedings",
+        "Networking events",
+        "Workshop participation",
+        "Digital certificate"
       ],
       icon: Star,
       color: "emerald",
       popular: true
     },
     {
-      name: "Industry",
-      price: "TBD",
-      description: "For industry professionals",
+      name: "International",
+      price: "$20",
+      description: "For international scholars and researchers",
       features: [
-        "All academic benefits",
-        "VIP networking sessions",
-        "Industry partnership opportunities",
-        "Technology showcase access",
-        "Premium conference materials"
+        "Access to all sessions",
+        "Conference proceedings",
+        "Premium networking",
+        "Workshop participation",
+        "Publication opportunities",
+        "Digital certificate"
       ],
       icon: Globe,
       color: "purple"
+    },
+    {
+      name: "Virtual Participation",
+      price: "₦20,000",
+      description: "Join us online from anywhere in the world",
+      features: [
+        "Live streaming of all sessions",
+        "Digital conference materials",
+        "Virtual networking opportunities",
+        "Q&A participation",
+        "Digital certificate",
+        "Recording access (limited time)"
+      ],
+      icon: Users,
+      color: "blue"
     }
   ];
 
@@ -134,7 +153,7 @@ export default function Registration() {
           </p>
         </motion.div>
 
-        {/* Registration Status */}
+        {/* Important Dates */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -158,17 +177,30 @@ export default function Registration() {
               >
                 <Calendar className="w-16 h-16 mx-auto" />
               </motion.div>
-              <h3 className="text-2xl font-bold mb-4">Registration Opening Soon</h3>
-              <p className="text-lg opacity-90 mb-6">
-                Registration will open once the conference program is finalized. 
-                Stay tuned for early bird pricing and special offers!
+              <h3 className="text-2xl font-bold mb-4">Important Registration Dates</h3>
+              <div className="grid md:grid-cols-3 gap-4 text-center">
+                <div>
+                  <p className="text-sm opacity-90">Early Bird</p>
+                  <p className="font-semibold">Sept 8 - 26, 2025</p>
+                </div>
+                <div>
+                  <p className="text-sm opacity-90">Mid Registration</p>
+                  <p className="font-semibold">Sept 27 - Oct 10, 2025</p>
+                </div>
+                <div>
+                  <p className="text-sm opacity-90">Late Registration</p>
+                  <p className="font-semibold">Oct 11 - 21, 2025</p>
+                </div>
+              </div>
+              <p className="text-lg opacity-90 mt-6 mb-6">
+                Abstract submission deadline: September 30, 2025
               </p>
               <motion.button 
                 className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-slate-100 transition-colors duration-300 shadow-lg"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get Notified When Registration Opens
+                Register Now
               </motion.button>
             </div>
           </div>
@@ -231,9 +263,8 @@ export default function Registration() {
                       ? 'bg-emerald-500 text-white hover:bg-emerald-600'
                       : `bg-${tier.color}-500 text-white hover:bg-${tier.color}-600`
                   }`}
-                  disabled
                 >
-                  Coming Soon
+                  Register Now
                 </button>
               </motion.div>
             );
@@ -287,7 +318,7 @@ export default function Registration() {
           </div>
         </motion.div>
 
-        {/* Contact for Registration */}
+        {/* Payment Information */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -296,18 +327,31 @@ export default function Registration() {
         >
           <div className="bg-gradient-to-r from-slate-900 to-blue-900 rounded-2xl p-8 md:p-12 text-white text-center">
             <h3 className="text-3xl font-bold mb-6">
-              Questions About Registration?
+              Payment Information
             </h3>
-            <p className="text-lg mb-8 opacity-90 max-w-3xl mx-auto">
-              Our registration team is here to help you choose the best option for your needs. 
-              Contact us for group discounts, special accommodations, or any other inquiries.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="grid md:grid-cols-2 gap-8 text-left">
+              <div>
+                <h4 className="text-xl font-semibold mb-4">Bank Details</h4>
+                <div className="space-y-2 opacity-90">
+                  <p><strong>Bank:</strong> Zenith Bank PLC</p>
+                  <p><strong>Account Name:</strong> Gaposa SS&T conference and journal</p>
+                  <p><strong>Account Number:</strong> 1226078857</p>
+                </div>
+              </div>
+              <div>
+                <h4 className="text-xl font-semibold mb-4">Contact Information</h4>
+                <div className="space-y-2 opacity-90">
+                  <p><strong>Email:</strong> gaposastconf@gmail.com</p>
+                  <p><strong>For:</strong> Registration inquiries and payment confirmation</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
               <button className="bg-white text-slate-900 px-8 py-3 rounded-lg font-semibold hover:bg-slate-100 transition-colors duration-300">
                 Contact Registration Team
               </button>
               <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors duration-300">
-                View Registration FAQ
+                Download Payment Form
               </button>
             </div>
           </div>

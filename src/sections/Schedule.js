@@ -99,91 +99,84 @@ export default function Schedule() {
           </p>
         </motion.div>
 
-        {/* Schedule Coming Soon */}
+        {/* Detailed Schedule */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16"
         >
-          <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-12 border border-white/50 overflow-hidden shadow-xl">
-            {/* Background pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Cpath d='M20 20h20v20H20z'/%3E%3Cpath d='M0 0h20v20H0z'/%3E%3C/g%3E%3C/svg%3E")`,
-              }} />
-            </div>
-            
-            <div className="relative z-10">
-              <motion.div 
-                className="w-24 h-24 bg-gradient-to-br from-blue-600 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg"
-                whileHover={{ scale: 1.1, rotate: 360 }}
-                transition={{ duration: 0.5 }}
+          <div className="grid gap-8">
+            {conferenceData.schedule.map((day, index) => (
+              <motion.div
+                key={day.day}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50 overflow-hidden shadow-xl"
               >
-                <Calendar className="w-12 h-12 text-white" />
+                {/* Background pattern */}
+                <div className="absolute inset-0 opacity-5">
+                  <div className="absolute inset-0" style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Cpath d='M20 20h20v20H20z'/%3E%3Cpath d='M0 0h20v20H0z'/%3E%3C/g%3E%3C/svg%3E")`
+                  }} />
+                </div>
+                
+                <div className="relative z-10">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                    <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                      <motion.div 
+                        className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg ${
+                          index === 0 ? 'bg-gradient-to-br from-blue-600 to-blue-700' :
+                          index === 1 ? 'bg-gradient-to-br from-emerald-600 to-emerald-700' :
+                          index === 2 ? 'bg-gradient-to-br from-purple-600 to-purple-700' :
+                          'bg-gradient-to-br from-orange-600 to-orange-700'
+                        }`}
+                        whileHover={{ scale: 1.1, rotate: 360 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <span className="text-white font-bold text-lg">{day.day}</span>
+                      </motion.div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-gray-900">{day.title}</h3>
+                        <p className="text-gray-600 flex items-center space-x-2">
+                          <Calendar className="w-4 h-4" />
+                          <span>{day.date}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-lg font-semibold text-gray-900">{day.time}</p>
+                      <p className="text-gray-600 flex items-center justify-end space-x-2">
+                        <MapPin className="w-4 h-4" />
+                        <span>{day.venue}</span>
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {day.activities.map((activity, actIndex) => (
+                      <motion.div
+                        key={actIndex}
+                        className="bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow-sm border border-white/50"
+                        whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="flex items-start space-x-3">
+                          <Clock className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <h4 className="font-semibold text-gray-900 mb-1">{activity.time}</h4>
+                            <p className="text-gray-700 text-sm">{activity.event}</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
               </motion.div>
-              
-              <h3 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-emerald-800 bg-clip-text text-transparent mb-6">
-                Detailed Schedule Coming Soon
-              </h3>
-              
-              <p className="text-lg text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed">
-                We are carefully curating a dynamic program that will maximize learning opportunities 
-                and foster meaningful connections between AI and circular economy communities.
-              </p>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <motion.div 
-                  className="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-white/50"
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Presentation className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Keynote Sessions</h4>
-                  <p className="text-gray-600 text-sm">Inspiring presentations from industry leaders</p>
-                </motion.div>
-                
-                <motion.div 
-                  className="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-white/50"
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Users className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Research Papers</h4>
-                  <p className="text-gray-600 text-sm">Latest findings in AI and sustainability</p>
-                </motion.div>
-                
-                <motion.div 
-                  className="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-white/50"
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Coffee className="w-8 h-8 text-purple-600 mx-auto mb-3" />
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Networking Breaks</h4>
-                  <p className="text-gray-600 text-sm">Connect with peers and experts</p>
-                </motion.div>
-                
-                <motion.div 
-                  className="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-white/50"
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <MapPin className="w-8 h-8 text-orange-600 mx-auto mb-3" />
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Panel Discussions</h4>
-                  <p className="text-gray-600 text-sm">Interactive sessions on key topics</p>
-                </motion.div>
-              </div>
-
-              <motion.div 
-                className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-emerald-600 text-white px-6 py-3 rounded-full shadow-lg"
-                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)" }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Clock className="w-5 h-5" />
-                <span className="font-semibold">Program Details Coming Soon</span>
-              </motion.div>
-            </div>
+            ))}
           </div>
         </motion.div>
 
@@ -311,7 +304,7 @@ export default function Schedule() {
                   transition={{ duration: 0.3 }}
                 >
                   <Timer className="w-6 h-6 mx-auto mb-2 text-blue-200" />
-                  <div className="text-2xl font-bold mb-2">TBD</div>
+                  <div className="text-2xl font-bold mb-2">30th Sept 2025</div>
                   <div className="text-sm opacity-90">Abstract Submission Deadline</div>
                 </motion.div>
                 
@@ -321,8 +314,8 @@ export default function Schedule() {
                   transition={{ duration: 0.3 }}
                 >
                   <Users className="w-6 h-6 mx-auto mb-2 text-emerald-200" />
-                  <div className="text-2xl font-bold mb-2">TBD</div>
-                  <div className="text-sm opacity-90">Notification of Acceptance</div>
+                  <div className="text-2xl font-bold mb-2">8th Sept 2025</div>
+                  <div className="text-sm opacity-90">Early Bird Registration Starts</div>
                 </motion.div>
                 
                 <motion.div 
@@ -331,8 +324,8 @@ export default function Schedule() {
                   transition={{ duration: 0.3 }}
                 >
                   <Calendar className="w-6 h-6 mx-auto mb-2 text-purple-200" />
-                  <div className="text-2xl font-bold mb-2">TBD</div>
-                  <div className="text-sm opacity-90">Early Bird Registration</div>
+                  <div className="text-2xl font-bold mb-2">26th Sept 2025</div>
+                  <div className="text-sm opacity-90">Early Bird Registration Ends</div>
                 </motion.div>
                 
                 <motion.div 

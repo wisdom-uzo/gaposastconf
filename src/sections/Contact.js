@@ -154,7 +154,7 @@ export default function Contact() {
                 <div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-1">Location</h4>
                   <p className="text-gray-600">{conferenceData.location}</p>
-                  <p className="text-sm text-gray-500 mt-1">Conference venue details coming soon</p>
+                  <p className="text-sm text-gray-500 mt-1">Prince Dapo Abiodun CON Leadership Hall</p>
                 </div>
               </motion.div>
 
@@ -171,9 +171,9 @@ export default function Contact() {
                   <Globe className="w-6 h-6 text-orange-600" />
                 </motion.div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Website</h4>
-                  <p className="text-gray-600">www.iconfst2025.org</p>
-                  <p className="text-sm text-gray-500 mt-1">Visit for latest updates and announcements</p>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Conference Mode</h4>
+                  <p className="text-gray-600">Virtual & Physical</p>
+                  <p className="text-sm text-gray-500 mt-1">Hybrid conference format available</p>
                 </div>
               </motion.div>
             </div>
@@ -300,24 +300,25 @@ export default function Contact() {
           <div className="bg-gradient-to-r from-slate-900 to-blue-900 rounded-2xl p-8 md:p-12 text-white">
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
-                <h4 className="text-xl font-bold mb-4">Organizing Committee</h4>
+                <h4 className="text-xl font-bold mb-4">Chief Host</h4>
                 <p className="opacity-90">
-                  Led by distinguished faculty from leading universities worldwide, 
-                  ensuring the highest academic standards.
+                  Dr. Sanni Kehinde Oseni<br/>
+                  Rector, Gateway (ICT) Polytechnic, Saapade
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-bold mb-4">Technical Support</h4>
+                <h4 className="text-xl font-bold mb-4">Host</h4>
                 <p className="opacity-90">
-                  Our technical team provides 24/7 support for submission systems, 
-                  registration, and conference platform access.
+                  Mr. Eleyowo, I. O<br/>
+                  Dean, School of Science and Technology<br/>
+                  Gateway (ICT) Polytechnic, Saapade
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-bold mb-4">Media Inquiries</h4>
+                <h4 className="text-xl font-bold mb-4">Chairman LOC</h4>
                 <p className="opacity-90">
-                  Press and media representatives can contact our communications team 
-                  for interviews, press releases, and conference coverage.
+                  Mr. Olujimi O. Oni<br/>
+                  Local Organizing Committee
                 </p>
               </div>
             </div>

@@ -100,58 +100,49 @@ export default function Speakers() {
           </p>
         </motion.div>
 
-        {/* Coming Soon Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-12 text-center mb-16 border border-white/50 overflow-hidden"
-        >
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Ccircle cx='50' cy='10' r='2'/%3E%3Ccircle cx='10' cy='50' r='2'/%3E%3Ccircle cx='50' cy='50' r='2'/%3E%3C/g%3E%3C/svg%3E")`,
-            }} />
-          </div>
-          
-          <div className="relative z-10">
-            <motion.div 
-              className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg"
-              whileHover={{ scale: 1.1, rotate: 360 }}
-              transition={{ duration: 0.5 }}
+        {/* Speakers Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {conferenceData.speakers.map((speaker, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/50 hover:shadow-2xl transition-all duration-300 group"
             >
-              <Users className="w-12 h-12 text-white" />
+              <div className="text-center">
+                {/* Speaker Avatar */}
+                <motion.div 
+                  className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Users className="w-12 h-12 text-white" />
+                </motion.div>
+                
+                {/* Speaker Info */}
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{speaker.name}</h3>
+                <p className="text-blue-600 font-semibold mb-2">{speaker.title}</p>
+                {speaker.credentials && (
+                  <p className="text-sm text-gray-600 mb-3">{speaker.credentials}</p>
+                )}
+                {speaker.position && (
+                  <p className="text-sm text-gray-700 mb-2">{speaker.position}</p>
+                )}
+                {speaker.affiliation && (
+                  <p className="text-sm text-gray-600 mb-4">{speaker.affiliation}</p>
+                )}
+                
+                {/* Role Badge */}
+                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full px-4 py-2 border border-blue-200">
+                  <Star className="w-4 h-4 text-blue-600" />
+                  <span className="text-blue-800 font-medium text-sm">{speaker.role}</span>
+                </div>
+              </div>
             </motion.div>
-            
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-purple-800 to-blue-800 bg-clip-text text-transparent mb-6">
-              Speakers Announcement Coming Soon
-            </h3>
-            
-            <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto leading-relaxed">
-              We are finalizing our lineup of distinguished keynote speakers and industry experts. 
-              Stay tuned for announcements of world-class researchers and thought leaders who will share 
-              their insights on AI and circular economy innovations.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button 
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg"
-                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)" }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get Notified
-              </motion.button>
-              <motion.button 
-                className="border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 px-8 py-3 rounded-lg font-semibold transition-all duration-300 bg-white/50 backdrop-blur-sm"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                View Past Speakers
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
+          ))}
+        </div>
 
         {/* Call for Speakers */}
         <motion.div

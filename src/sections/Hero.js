@@ -191,7 +191,7 @@ export default function Hero() {
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="w-4 h-4" />
-                <span>66 Research Topics</span>
+                <span>{conferenceData.subthemes.length} Research Topics</span>
               </div>
             </motion.div>
           </div>

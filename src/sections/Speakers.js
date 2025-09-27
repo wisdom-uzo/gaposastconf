@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Users, Mail, Calendar, Award, MessageSquare, ExternalLink, Mic, Star } from "lucide-react";
 import { conferenceData } from "@/data/conference";
 
@@ -114,11 +115,21 @@ export default function Speakers() {
               <div className="text-center">
                 {/* Speaker Avatar */}
                 <motion.div 
-                  className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300"
+                  className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden"
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Users className="w-12 h-12 text-white" />
+                  {speaker.name === "Dr. Lawal Kolawole Adebayo" ? (
+                    <Image 
+                      src="/Lawal  kolawole.jpg" 
+                      alt={speaker.name}
+                      width={96}
+                      height={96}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Users className="w-12 h-12 text-white" />
+                  )}
                 </motion.div>
                 
                 {/* Speaker Info */}

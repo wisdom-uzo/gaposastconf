@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Brain, Recycle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { conferenceData } from "@/data/conference";
+import Link from "next/link";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,13 +20,13 @@ export default function Header() {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Subthemes", href: "#subthemes" },
-    { name: "Speakers", href: "#speakers" },
-    { name: "Schedule", href: "#schedule" },
-    { name: "Registration", href: "#registration" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Subthemes", href: "/subthemes" },
+    { name: "Speakers", href: "/speakers" },
+    { name: "Schedule", href: "/schedule" },
+    { name: "Registration", href: "/register" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -83,23 +84,23 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-2">
             {navItems.map((item, index) => (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className={`relative px-4 py-2 rounded-xl font-medium transition-all duration-300 group ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:shadow-md"
-                    : "text-white hover:text-blue-200 hover:bg-white/20 backdrop-blur-sm hover:shadow-lg"
-                }`}
-              >
-                {item.name}
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </motion.a>
+              <Link key={item.name} href={item.href}>
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`relative px-4 py-2 rounded-xl font-medium transition-all duration-300 group cursor-pointer ${
+                    isScrolled
+                      ? "text-gray-700 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:shadow-md"
+                      : "text-white hover:text-blue-200 hover:bg-white/20 backdrop-blur-sm hover:shadow-lg"
+                  }`}
+                >
+                  {item.name}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </motion.div>
+              </Link>
             ))}
           </nav>
 
@@ -114,17 +115,19 @@ export default function Header() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button
-                className={`relative transition-all duration-300 font-semibold shadow-lg overflow-hidden ${
-                  isScrolled
-                    ? "bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white hover:shadow-xl"
-                    : "bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 hover:shadow-xl"
-                }`}
-              >
-                <Sparkles className="w-4 h-4 mr-2" />
-                Submit Abstract
-                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-              </Button>
+              <Link href="/submit-paper">
+                <Button
+                  className={`relative transition-all duration-300 font-semibold shadow-lg overflow-hidden ${
+                    isScrolled
+                      ? "bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white hover:shadow-xl"
+                      : "bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 hover:shadow-xl"
+                  }`}
+                >
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Submit Abstract
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
 
@@ -168,21 +171,21 @@ export default function Header() {
           >
             <div className="px-4 py-6 space-y-3">
               {navItems.map((item, index) => (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.02, x: 5 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-between px-4 py-3 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 font-medium transition-all duration-300 group shadow-sm hover:shadow-md"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span>{item.name}</span>
-                  <div className="w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.a>
+                <Link key={item.name} href={item.href}>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ scale: 1.02, x: 5 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 font-medium transition-all duration-300 group shadow-sm hover:shadow-md cursor-pointer"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span>{item.name}</span>
+                    <div className="w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </motion.div>
+                </Link>
               ))}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -192,10 +195,12 @@ export default function Header() {
                 whileTap={{ scale: 0.98 }}
                 className="pt-4"
               >
-                <Button className="w-full bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  Submit Abstract
-                </Button>
+                <Link href="/submit-paper">
+                  <Button className="w-full bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                    <Sparkles className="w-4 h-4 mr-2" />
+                    Submit Abstract
+                  </Button>
+                </Link>
               </motion.div>
             </div>
           </motion.div>

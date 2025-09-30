@@ -6,8 +6,8 @@ const key = new TextEncoder().encode(secretKey);
 
 // Admin credentials (in production, use a proper database)
 const ADMIN_CREDENTIALS = {
-  username: 'admin',
-  password: 'admin123' // Change this in production
+  username: 'gaposastconf',
+  password: 'ICONST-25' // Change this in production
 };
 
 export async function encrypt(payload) {
@@ -38,7 +38,8 @@ export async function login(username, password) {
     const session = await encrypt({ user, expires });
 
     // Save session in cookie
-    cookies().set('session', session, { expires, httpOnly: true });
+    const cookieStore = await cookies();
+    cookieStore.set('session', session, { expires, httpOnly: true });
     
     return { success: true, user };
   }
@@ -48,11 +49,13 @@ export async function login(username, password) {
 
 export async function logout() {
   // Destroy the session
-  cookies().set('session', '', { expires: new Date(0) });
+  const cookieStore = await cookies();
+  cookieStore.set('session', '', { expires: new Date(0) });
 }
 
 export async function getSession() {
-  const session = cookies().get('session')?.value;
+  const cookieStore = await cookies();
+  const session = cookieStore.get('session')?.value;
   if (!session) return null;
   
   return await decrypt(session);

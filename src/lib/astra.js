@@ -88,7 +88,7 @@ export async function updateRegistration(id, updateData) {
       { $set: updateWithTimestamp }
     );
     
-    return { success: result.modifiedCount > 0 };
+    return result.modifiedCount > 0;
   } catch (error) {
     console.error('Error updating registration:', error);
     throw new Error('Failed to update registration');
@@ -100,7 +100,7 @@ export async function deleteRegistration(id) {
   try {
     const collection = await getRegistrationsCollection();
     const result = await collection.deleteOne({ _id: id });
-    return { success: result.deletedCount > 0 };
+    return result.deletedCount > 0;
   } catch (error) {
     console.error('Error deleting registration:', error);
     throw new Error('Failed to delete registration');

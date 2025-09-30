@@ -34,6 +34,13 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
+  
+  // Modal states
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState(""); // 'view', 'edit', 'delete'
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [editForm, setEditForm] = useState({});
+  const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -82,6 +89,169 @@ export default function AdminDashboard() {
     return matchesSearch && matchesFilter;
   });
 
+  // Action handlers
+  const handleViewItem = (item, type) => {
+    setSelectedItem(item);
+    setModalType('view');
+    setShowModal(true);
+  };
+
+  const handleEditItem = (item, type) => {
+    setSelectedItem(item);
+    setEditForm(item);
+    setModalType('edit');
+    setShowModal(true);
+  };
+
+  const handleDeleteItem = (item, type) => {
+    setSelectedItem(item);
+    setModalType('delete');
+    setShowModal(true);
+  };
+
+  const handleUpdateRegistration = async () => {
+    setActionLoading(true);
+    try {
+      const response = await fetch('/api/admin/registrations', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editForm),
+      });
+
+      if (response.ok) {
+        await fetchData();
+        setShowModal(false);
+        setSelectedItem(null);
+        setEditForm({});
+      } else {
+        alert('Failed to update registration');
+      }
+    } catch (error) {
+      console.error('Error updating registration:', error);
+      alert('Error updating registration');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleDeleteRegistration = async () => {
+    setActionLoading(true);
+    try {
+      const response = await fetch(`/api/admin/registrations?id=${selectedItem._id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        await fetchData();
+        setShowModal(false);
+        setSelectedItem(null);
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to delete registration: ${errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error deleting registration:', error);
+      alert('Error deleting registration');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleUpdatePaperStatus = async (status, paperItem = null) => {
+    const itemToUpdate = paperItem || selectedItem;
+    
+    if (!itemToUpdate || !itemToUpdate._id) {
+      alert('No paper selected for update');
+      return;
+    }
+
+    setActionLoading(true);
+    try {
+      const response = await fetch('/api/admin/papers', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          id: itemToUpdate._id,
+          status: status,
+          reviewedAt: new Date().toISOString()
+        }),
+      });
+
+      if (response.ok) {
+        await fetchData();
+        setShowModal(false);
+        setSelectedItem(null);
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to update paper status: ${errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error updating paper status:', error);
+      alert('Error updating paper status');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleDeletePaper = async (paperItem = null) => {
+    const itemToDelete = paperItem || selectedItem;
+    
+    if (!itemToDelete || !itemToDelete._id) {
+      alert('No paper selected for deletion');
+      return;
+    }
+
+    if (!confirm('Are you sure you want to delete this paper? This action cannot be undone.')) {
+      return;
+    }
+
+    setActionLoading(true);
+    try {
+      const response = await fetch(`/api/admin/papers?id=${itemToDelete._id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        await fetchData();
+        setShowModal(false);
+        setSelectedItem(null);
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to delete paper: ${errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error deleting paper:', error);
+      alert('Error deleting paper');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleExportData = (type) => {
+    const data = type === 'registrations' ? registrations : papers;
+    const csvContent = "data:text/csv;charset=utf-8," + 
+      Object.keys(data[0] || {}).join(",") + "\n" +
+      data.map(row => Object.values(row).join(",")).join("\n");
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `${type}_export.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const StatCard = ({ title, value, icon: Icon, color, trend }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -120,6 +290,39 @@ export default function AdminDashboard() {
       <span>{label}</span>
     </motion.button>
   );
+
+  // Modal Component
+  const Modal = ({ isOpen, onClose, children }) => {
+    if (!isOpen) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        >
+          <div className="p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-gray-900">
+                {modalType === 'view' ? 'View Details' : 
+                 modalType === 'edit' ? 'Edit Record' : 
+                 'Confirm Delete'}
+              </h3>
+              <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <XCircle className="w-6 h-6" />
+              </button>
+            </div>
+            {children}
+          </div>
+        </motion.div>
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -255,7 +458,10 @@ export default function AdminDashboard() {
                       className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                  <button 
+                    onClick={() => handleExportData('registrations')}
+                    className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
                     <Download className="w-4 h-4" />
                     <span>Export</span>
                   </button>
@@ -326,13 +532,25 @@ export default function AdminDashboard() {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                               <div className="flex space-x-2">
-                                <button className="text-blue-600 hover:text-blue-900">
+                                <button 
+                                  onClick={() => handleViewItem(reg, 'registration')}
+                                  className="text-blue-600 hover:text-blue-900"
+                                  title="View Details"
+                                >
                                   <Eye className="w-4 h-4" />
                                 </button>
-                                <button className="text-green-600 hover:text-green-900">
+                                <button 
+                                  onClick={() => handleEditItem(reg, 'registration')}
+                                  className="text-green-600 hover:text-green-900"
+                                  title="Edit Registration"
+                                >
                                   <Edit className="w-4 h-4" />
                                 </button>
-                                <button className="text-red-600 hover:text-red-900">
+                                <button 
+                                  onClick={() => handleDeleteItem(reg, 'registration')}
+                                  className="text-red-600 hover:text-red-900"
+                                  title="Delete Registration"
+                                >
                                   <Trash2 className="w-4 h-4" />
                                 </button>
                               </div>
@@ -378,7 +596,10 @@ export default function AdminDashboard() {
                     <option value="approved">Approved</option>
                     <option value="rejected">Rejected</option>
                   </select>
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                  <button 
+                    onClick={() => handleExportData('papers')}
+                    className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
                     <Download className="w-4 h-4" />
                     <span>Export</span>
                   </button>
@@ -447,14 +668,39 @@ export default function AdminDashboard() {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                               <div className="flex space-x-2">
-                                <button className="text-blue-600 hover:text-blue-900">
+                                <button 
+                                  onClick={() => handleViewItem(paper, 'paper')}
+                                  className="text-blue-600 hover:text-blue-900"
+                                  title="View Paper Details"
+                                >
                                   <Eye className="w-4 h-4" />
                                 </button>
-                                <button className="text-green-600 hover:text-green-900">
+                                <button 
+                                  onClick={() => {
+                                    handleUpdatePaperStatus('approved', paper);
+                                  }}
+                                  className="text-green-600 hover:text-green-900"
+                                  title="Approve Paper"
+                                >
                                   <CheckCircle className="w-4 h-4" />
                                 </button>
-                                <button className="text-red-600 hover:text-red-900">
+                                <button 
+                                  onClick={() => {
+                                    handleUpdatePaperStatus('rejected', paper);
+                                  }}
+                                  className="text-red-600 hover:text-red-900"
+                                  title="Reject Paper"
+                                >
                                   <XCircle className="w-4 h-4" />
+                                </button>
+                                <button 
+                                  onClick={() => {
+                                    handleDeletePaper(paper);
+                                  }}
+                                  className="text-red-600 hover:text-red-900"
+                                  title="Delete Paper"
+                                >
+                                  <Trash2 className="w-4 h-4" />
                                 </button>
                               </div>
                             </td>
@@ -502,6 +748,202 @@ export default function AdminDashboard() {
           )}
         </div>
       </div>
+
+      {/* Modal */}
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        {modalType === 'view' && selectedItem && (
+          <div className="space-y-4">
+            {activeTab === 'registrations' ? (
+              <>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                    <p className="mt-1 text-sm text-gray-900">{selectedItem.fullName}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Email</label>
+                    <p className="mt-1 text-sm text-gray-900">{selectedItem.email}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Phone</label>
+                    <p className="mt-1 text-sm text-gray-900">{selectedItem.phone}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Institution</label>
+                    <p className="mt-1 text-sm text-gray-900">{selectedItem.institution}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Registration Type</label>
+                    <p className="mt-1 text-sm text-gray-900">{selectedItem.registrationType}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Registration Date</label>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {new Date(selectedItem.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Paper Title</label>
+                    <p className="mt-1 text-sm text-gray-900">{selectedItem.title}</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Author Name</label>
+                      <p className="mt-1 text-sm text-gray-900">{selectedItem.authorName}</p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Author Email</label>
+                      <p className="mt-1 text-sm text-gray-900">{selectedItem.authorEmail}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Subtheme</label>
+                    <p className="mt-1 text-sm text-gray-900">{selectedItem.subtheme}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Abstract</label>
+                    <p className="mt-1 text-sm text-gray-900 max-h-32 overflow-y-auto">
+                      {selectedItem.abstract}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Status</label>
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        selectedItem.status === 'approved' ? 'bg-green-100 text-green-800' :
+                        selectedItem.status === 'rejected' ? 'bg-red-100 text-red-800' :
+                        selectedItem.status === 'under_review' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}>
+                        {selectedItem.status?.replace('_', ' ') || 'submitted'}
+                      </span>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Submitted Date</label>
+                      <p className="mt-1 text-sm text-gray-900">
+                        {new Date(selectedItem.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {modalType === 'edit' && selectedItem && activeTab === 'registrations' && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                <input
+                  type="text"
+                  value={editForm.fullName || ''}
+                  onChange={(e) => setEditForm({...editForm, fullName: e.target.value})}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <input
+                  type="email"
+                  value={editForm.email || ''}
+                  onChange={(e) => setEditForm({...editForm, email: e.target.value})}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Phone</label>
+                <input
+                  type="tel"
+                  value={editForm.phone || ''}
+                  onChange={(e) => setEditForm({...editForm, phone: e.target.value})}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Institution</label>
+                <input
+                  type="text"
+                  value={editForm.institution || ''}
+                  onChange={(e) => setEditForm({...editForm, institution: e.target.value})}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Registration Type</label>
+                <select
+                  value={editForm.registrationType || ''}
+                  onChange={(e) => setEditForm({...editForm, registrationType: e.target.value})}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="student">Student</option>
+                  <option value="academic">Academic</option>
+                  <option value="professional">Professional</option>
+                </select>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-3 pt-4">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUpdateRegistration}
+                disabled={actionLoading}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+              >
+                {actionLoading ? 'Updating...' : 'Update Registration'}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {modalType === 'delete' && selectedItem && (
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <AlertCircle className="w-8 h-8 text-red-500" />
+              <div>
+                <h4 className="text-lg font-medium text-gray-900">Confirm Delete</h4>
+                <p className="text-sm text-gray-600">
+                  Are you sure you want to delete this {activeTab === 'registrations' ? 'registration' : 'paper'}? 
+                  This action cannot be undone.
+                </p>
+              </div>
+            </div>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <p className="text-sm font-medium text-gray-900">
+                {activeTab === 'registrations' ? selectedItem.fullName : selectedItem.title}
+              </p>
+              <p className="text-sm text-gray-600">
+                {activeTab === 'registrations' ? selectedItem.email : selectedItem.authorName}
+              </p>
+            </div>
+            <div className="flex justify-end space-x-3 pt-4">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={activeTab === 'registrations' ? handleDeleteRegistration : handleDeletePaper}
+                disabled={actionLoading}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+              >
+                {actionLoading ? 'Deleting...' : 'Delete'}
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
 
       <Footer />
     </div>

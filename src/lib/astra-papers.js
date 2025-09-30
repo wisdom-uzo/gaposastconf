@@ -89,7 +89,7 @@ export async function updatePaperSubmission(id, updateData) {
       { $set: updateWithTimestamp }
     );
     
-    return { success: result.modifiedCount > 0 };
+    return result.modifiedCount > 0;
   } catch (error) {
     console.error('Error updating paper submission:', error);
     throw new Error('Failed to update paper submission');
@@ -101,7 +101,7 @@ export async function deletePaperSubmission(id) {
   try {
     const collection = await getPaperSubmissionsCollection();
     const result = await collection.deleteOne({ _id: id });
-    return { success: result.deletedCount > 0 };
+    return result.deletedCount > 0;
   } catch (error) {
     console.error('Error deleting paper submission:', error);
     throw new Error('Failed to delete paper submission');
